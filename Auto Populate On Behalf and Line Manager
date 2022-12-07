@@ -1,0 +1,23 @@
+function onChange(control, oldValue, newValue, isLoading) {
+// if ((isLoading && !g_form.isNewRecord()) || (g_form.isLiveUpdating && g_form.isLiveUpdating()))
+// return;
+
+// if (newValue == '' || newValue == null) {
+// g_form.setValue('u_line_manager', ''); //Your manager field name
+// return;
+// }
+if (!g_form.hasField('u_line_manager'))
+return;
+	var onbehalf = g_form.getReference('u_onbehalf', setManager);
+var man = g_form.getReference('u_onbehalf', setManager);
+}
+
+function setManager(man) {
+if (man)
+g_form.setValue('u_line_manager', man.manager);
+}
+
+g_form.setValue('u_onbehalf',g_user.userID);
+	
+	
+
