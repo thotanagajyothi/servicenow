@@ -1,3 +1,12 @@
+//Auto Populate On Behalf and Line Manager. 
+//"Create 1 Custom Field called OnBehalf in Incident form.
+//Create 2 Custom Field Called Line Manager in incdent form
+//Auto Populate OnBehalf of Field with Logged In User and Line Manager with User->Manger using Client Script
+//When ever Forms Loads and changes. 
+//"
+//ON CHANGE CLIENT SCRIPT
+
+
 function onChange(control, oldValue, newValue, isLoading) {
 // if ((isLoading && !g_form.isNewRecord()) || (g_form.isLiveUpdating && g_form.isLiveUpdating()))
 // return;
