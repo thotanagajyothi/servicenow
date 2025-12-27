@@ -45,7 +45,10 @@ jobs:
               "attributes": {
                 "short_description": "GitHub Actions Deployment",
                 "description": "Automated change created from GitHub Actions pipeline",
-                "assignment_group": "DevOps",
+
+                "chg_model": "adffaa9e4370211072b7f6be5bb8f2ed",
+                "assignment_group": "6fec7fdd5b40011074d09113a281c771",
+
                 "category": "Software",
                 "risk": "3",
                 "impact": "3"
