@@ -1,0 +1,66 @@
+name: ServiceNow DevOps Change Automation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  servicenow-change:
+    name: Create ServiceNow Change
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Create and monitor ServiceNow Change
+        uses: ServiceNow/servicenow-devops-change@v6.1.0
+        with:
+          # ServiceNow instance details
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+
+          # DevOps integration token from ServiceNow
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+
+          # Tool ID of GitHub integration (sys_id)
+          tool-id: ${{ secrets.SN_DEVOPS_TOOL_ID }}
+
+          # GitHub context
+          context-github: ${{ toJSON(github) }}
+
+          # Pipeline job name
+          job-name: "Build and Deploy"
+
+          # Change request payload
+          change-request: |
+            {
+              "setCloseCode": "true",
+              "autoCloseChange": true,
+              "attributes": {
+                "short_description": "GitHub Actions Deployment",
+                "description": "Automated change created from GitHub Actions pipeline",
+                "assignment_group": "DevOps",
+                "category": "Software",
+                "risk": "3",
+                "impact": "3"
+              }
+            }
+
+          # Polling configuration
+          interval: "100"
+          timeout: "3600"
+          changeCreationTimeOut: "3600"
+
+          # Failure handling
+          abortOnChangeCreationFailure: true
+          abortOnChangeStepTimeout: true
+
+      - name: Print Change Number
+        run: |
+          echo "ServiceNow Change Number: ${{ steps.servicenow-change.outputs.change-request-number }}"
