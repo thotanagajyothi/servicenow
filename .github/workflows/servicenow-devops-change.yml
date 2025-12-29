@@ -42,7 +42,7 @@ jobs:
           change-request: |
             {
               "setCloseCode": "false",
-              "autoCloseChange": false,
+              "autoCloseChange": "false",
               "attributes": {
                 "short_description": "GitHub Actions Deployment",
                 "description": "Automated change created from GitHub Actions pipeline",
