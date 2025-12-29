@@ -46,7 +46,7 @@ jobs:
               "attributes": {
                 "short_description": "GitHub Actions Deployment",
                 "description": "Automated change created from GitHub Actions pipeline",
-                "chg_model": "adffaa9e4370211072b7f6be5bb8f2ed",
+                "chg_model": "adffaa9e4370211072b7f6be5bb8f2ed"
               }
             }
 
