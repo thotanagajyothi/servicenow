@@ -41,8 +41,8 @@ jobs:
           # Change request payload
           change-request: |
             {
-              "setCloseCode": "true",
-              "autoCloseChange": true,
+              "setCloseCode": "false",
+              "autoCloseChange": false,
               "attributes": {
                 "short_description": "GitHub Actions Deployment",
                 "description": "Automated change created from GitHub Actions pipeline",
