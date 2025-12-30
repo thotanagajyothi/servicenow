@@ -77,7 +77,6 @@ jobs:
               "attributes": {
                 "short_description": "GitHub Actions Release Deployment",
                 "description": "Release triggered via Git tag. Pipeline gated on ServiceNow approval.",
-                "chg_model": "adffaa9e4370211072b7f6be5bb8f2ed"
               }
             }
           interval: "100"
