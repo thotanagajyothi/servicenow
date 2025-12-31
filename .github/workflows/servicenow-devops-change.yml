@@ -38,28 +38,28 @@ jobs:
           # Pipeline job name
           job-name: "Build and Deploy"
 
-          # Change request payload
+          # Change request payload (MUST be valid JSON)
           change-request: |
-            changeCreationTimeOut: 3600,
-            changeRequestDetails: '''
             {
-              "attributes": {
-                "short_description": "Test description",
-                "priority": "1",
-                "start_date": "2024-01-11 08:00:00",
-                "end_date": "2024-01-11 08:00:00",
-                "justification": "test justification",
-                "description": "test description",
-                "cab_required": true,
-                "comments": "This update for work notes is from jenkins file",
-                "work_notes": "test work notes",
-                "assignment_group": "a715cd759f2002002920bde8132e7018"
-              },
-              "setCloseCode": false
+              "changeCreationTimeOut": 3600,
+              "changeStepTimeOut": 1800,
+              "pollingInterval": 30,
+              "changeRequestDetails": {
+                "attributes": {
+                  "short_description": "Test description",
+                  "priority": "1",
+                  "start_date": "2024-01-11 08:00:00",
+                  "end_date": "2024-01-11 08:00:00",
+                  "justification": "test justification",
+                  "description": "test description",
+                  "cab_required": true,
+                  "comments": "Change created via GitHub Actions",
+                  "work_notes": "Test work notes",
+                  "assignment_group": "a715cd759f2002002920bde8132e7018"
+                },
+                "setCloseCode": false
+              }
             }
-            ''',
-            changeStepTimeOut: 1800,
-            pollingInterval: 30
 
       - name: Print Change Number
         run: |
