@@ -59,7 +59,6 @@ jobs:
       - name: Copy man page
         run: cp docs/witr.1 ./witr.1
 
-      # 🚦 ServiceNow Change – waits for approval
       - name: ServiceNow DevOps Change
         uses: ServiceNow/servicenow-devops-change@v6.1.0
         with:
