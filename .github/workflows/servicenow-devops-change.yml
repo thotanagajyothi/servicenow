@@ -77,7 +77,7 @@ jobs:
                 "description": "test description",
                 "cab_required": true,
                 "comments": "This update for work notes is from GitHub Actions",
-                "work_notes": "test work notes"
+                "work_notes": "test work notes ty"
               },
               "setCloseCode": false
             }
