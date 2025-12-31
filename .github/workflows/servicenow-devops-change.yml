@@ -1,72 +1,47 @@
-name: Release
+name: ServiceNow DevOps Change Automation
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
-  build-and-release:
+  servicenow-change:
+    name: Create ServiceNow Change
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.25"
-
-      - name: Set version and commit
-        run: |
-          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          echo "COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
-
-      - name: Build linux/amd64
-        run: |
-          GOOS=linux GOARCH=amd64 go build \
-            -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
-            -o witr-linux-amd64 ./cmd/witr
-
-      - name: Build linux/arm64
-        run: |
-          GOOS=linux GOARCH=arm64 go build \
-            -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
-            -o witr-linux-arm64 ./cmd/witr
-
-      - name: Build darwin/amd64
-        run: |
-          GOOS=darwin GOARCH=amd64 go build \
-            -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
-            -o witr-darwin-amd64 ./cmd/witr
-
-      - name: Build darwin/arm64
-        run: |
-          GOOS=darwin GOARCH=arm64 go build \
-            -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
-            -o witr-darwin-arm64 ./cmd/witr
-
-      - name: Generate SHA256SUMS
-        run: |
-          sha256sum \
-            witr-linux-amd64 \
-            witr-linux-arm64 \
-            witr-darwin-amd64 \
-            witr-darwin-arm64 > SHA256SUMS
-
-      - name: Copy man page
-        run: cp docs/witr.1 ./witr.1
-
-      # 🚦 ServiceNow Change – waits for approval
-      - name: ServiceNow DevOps Change
+      - name: Create and monitor ServiceNow Change
+        id: servicenow-change
         uses: ServiceNow/servicenow-devops-change@v6.1.0
         with:
+          # ServiceNow instance details
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
-          username: ${{ secrets.SN_USERNAME }}
-          password: ${{ secrets.SN_PASSWORD }}
-          change-request-details: |
+
+          # DevOps integration token from ServiceNow
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+
+          # Tool ID of GitHub integration (sys_id)
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+
+          # GitHub context
+          context-github: ${{ toJSON(github) }}
+
+          # Pipeline job name
+          job-name: "Build and Deploy"
+
+          # Change request payload
+          change-request: |
+            changeCreationTimeOut: 3600,
+            changeRequestDetails: '''
             {
               "attributes": {
                 "short_description": "Test description",
@@ -76,26 +51,16 @@ jobs:
                 "justification": "test justification",
                 "description": "test description",
                 "cab_required": true,
-                "comments": "This update for work notes is from GitHub Actions",
-                "work_notes": "test work notes ty"
+                "comments": "This update for work notes is from jenkins file",
+                "work_notes": "test work notes",
+                "assignment_group": "a715cd759f2002002920bde8132e7018"
               },
               "setCloseCode": false
             }
-          change-creation-timeout: 3600
-          change-step-timeout: 1800
-          polling-interval: 30
+            ''',
+            changeStepTimeOut: 1800,
+            pollingInterval: 30
 
-      # GitHub Release
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          generate_release_notes: true
-          files: |
-            witr-linux-amd64
-            witr-linux-arm64
-            witr-darwin-amd64
-            witr-darwin-arm64
-            SHA256SUMS
-            witr.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print Change Number
+        run: |
+          echo "ServiceNow Change Number: ${{ steps.servicenow-change.outputs.change-request-number }}"
