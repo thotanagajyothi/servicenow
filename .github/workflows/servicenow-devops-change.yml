@@ -12,33 +12,20 @@ on:
 
 jobs:
   servicenow-change:
-    name: Create ServiceNow Change
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Create and monitor ServiceNow Change
-        id: servicenow-change
+      - id: servicenow-change
+        name: Create and monitor ServiceNow Change
         uses: ServiceNow/servicenow-devops-change@v6.1.0
         with:
-          # ServiceNow instance details
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
-
-          # DevOps integration token from ServiceNow
           devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
-
-          # Tool ID of GitHub integration (sys_id)
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-
-          # GitHub context
           context-github: ${{ toJSON(github) }}
-
-          # Pipeline job name
           job-name: Build and Deploy
-
-          # Change request payload (YAML, NOT JSON)
           change-request:
             changeCreationTimeOut: 3600
             changeStepTimeOut: 1800
@@ -53,5 +40,4 @@ jobs:
               setCloseCode: false
 
       - name: Print Change Number
-        run: |
-          echo "ServiceNow Change Number: ${{ steps.servicenow-change.outputs.change-request-number }}"
+        run: echo "ServiceNow Change Number: ${{ steps.servicenow-change.outputs.change-request-number }}"
