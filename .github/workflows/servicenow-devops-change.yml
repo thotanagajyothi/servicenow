@@ -47,10 +47,8 @@ jobs:
               "changeRequestDetails": {
                 "attributes": {
                   "short_description": "Test description",
-                  "priority": "1",
                   "justification": "test justification",
                   "description": "test description",
-                  "cab_required": true,
                   "comments": "Change created via GitHub Actions",
                   "work_notes": "Test work notes"
                 },
