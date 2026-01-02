@@ -54,8 +54,7 @@ jobs:
                   "description": "test description",
                   "cab_required": true,
                   "comments": "Change created via GitHub Actions",
-                  "work_notes": "Test work notes",
-                  "assignment_group": "a715cd759f2002002920bde8132e7018"
+                  "work_notes": "Test work notes"
                 },
                 "setCloseCode": false
               }
