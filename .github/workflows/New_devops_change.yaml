@@ -30,34 +30,7 @@ jobs:
             -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
             -o witr-linux-amd64 ./cmd/witr
 
-      - name: Build linux/arm64
-        run: |
-          GOOS=linux GOARCH=arm64 go build \
-            -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
-            -o witr-linux-arm64 ./cmd/witr
-
-      - name: Build darwin/amd64
-        run: |
-          GOOS=darwin GOARCH=amd64 go build \
-            -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
-            -o witr-darwin-amd64 ./cmd/witr
-
-      - name: Build darwin/arm64
-        run: |
-          GOOS=darwin GOARCH=arm64 go build \
-            -ldflags "-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE" \
-            -o witr-darwin-arm64 ./cmd/witr
-
-      - name: Generate SHA256SUMS
-        run: |
-          sha256sum \
-            witr-linux-amd64 \
-            witr-linux-arm64 \
-            witr-darwin-amd64 \
-            witr-darwin-arm64 > SHA256SUMS
-
-      - name: Copy man page
-        run: cp docs/witr.1 ./witr.1
+      
 
       # 🚦 ServiceNow Change – waits for approval
       - name: ServiceNow DevOps Change
@@ -71,11 +44,8 @@ jobs:
               "attributes": {
                 "short_description": "Test description",
                 "priority": "1",
-                "start_date": "2024-01-11 08:00:00",
-                "end_date": "2024-01-11 08:00:00",
                 "justification": "test justification",
                 "description": "test description",
-                "cab_required": true,
                 "comments": "This update for work notes is from GitHub Actions",
                 "work_notes": "test work notes"
               },
