@@ -22,6 +22,6 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: Build and Deploy
           change-request: |-
-            {"changeCreationTimeOut":3600,"changeStepTimeOut":1800,"pollingInterval":30,"changeRequestDetails":{"attributes":{"short_description":"Test description","type":"DevOps Simplified","justification":"test justification","description":"test description","comments":"Change created via GitHub Actions","work_notes":"Test work notes"},"setCloseCode":false}}
+            {"changeCreationTimeOut":3600,"changeStepTimeOut":1800,"pollingInterval":30,"changeRequestDetails":{"attributes":{"short_description":"Test descriptiont","type":"DevOps Simplified","justification":"test justification","description":"test description","comments":"Change created via GitHub Actions","work_notes":"Test work notes"},"setCloseCode":false}}
 
       - run: echo "Change Number = ${{ steps.servicenow-change.outputs.change-request-number }}"
