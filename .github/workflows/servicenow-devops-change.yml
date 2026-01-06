@@ -7,8 +7,11 @@ on:
 
 jobs:
   build:
-     name : build
      runs-on: ubuntu-latest
+     
+     steps:
+      - name: Checkout code
+        run: echo "build completed"
   
   servicenow-change:
     name : create ServiceNow Change
@@ -16,10 +19,7 @@ jobs:
     needs : build
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: Create ServiceNow Change
-        id: servicenow-change
         uses: ServiceNow/servicenow-devops-change@v6.1.0
         with:
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
