@@ -19,14 +19,14 @@ jobs:
     needs : build
 
     steps:
-      - name: Create ServiceNow Change
+      - name: change
         uses: ServiceNow/servicenow-devops-change@v2.0.0
         with:
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
           devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
-          job-name: Build and Deploy
+          job-name: Create ServiceNow Change
           change-request:
             '{"changeCreationTimeOut":3600,"changeStepTimeOut":1800,"pollingInterval":30,"changeRequestDetails":{"attributes":{"short_description":"Test descriptiont","type":"DevOps Simplified","justification":"test justification","description":"test description","comments":"Change created via GitHub Actions","work_notes":"Test work notes"},"setCloseCode":false}}'
 
