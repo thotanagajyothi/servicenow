@@ -6,11 +6,16 @@ on:
       - main
 
 jobs:
+  Haish:
+    runs-on: ubuntu-latest
+    steps:
+       - name : Harish test
+         run: echo "Step 1 Harish complete"
 
   servicenow-change:
     name : create ServiceNow Change
     runs-on: ubuntu-latest
-
+    needs : Haish
     steps:
       - name: change
         uses: ServiceNow/servicenow-devops-change@v2.0.0
