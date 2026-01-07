@@ -22,6 +22,6 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: Create ServiceNow Change
           change-request:
-            '{"changeCreationTimeOut":3600,"changeStepTimeOut":1800,"pollingInterval":30,"changeRequestDetails":{"attributes":"attributes": {"short_description": "Test description","priority": "1","start_date": "2024-01-11 08:00:00", "end_date": "2024-01-11 08:00:00", "justification": "test justification","description": "test description"   },"setCloseCode": false}}'
+            '{"changeCreationTimeOut":3600,"changeStepTimeOut":1800,"pollingInterval":30,"changeRequestDetails":{"attributes": {"short_description": "Test description","priority": "1","start_date": "2024-01-11 08:00:00", "end_date": "2024-01-11 08:00:00", "justification": "test justification","description": "test description"   },"setCloseCode": false}}'
 
      # - run: echo "Change Number = ${{ steps.servicenow-change.outputs.change-request-number }}"
