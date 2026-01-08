@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - name : Harish test
-         run: echo "Step 1 Harish complete"
+         run: echo "Step 1 Harish complete3"
 
   servicenow-change:
     name : create ServiceNow Change
