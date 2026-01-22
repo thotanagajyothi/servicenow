@@ -29,4 +29,4 @@ jobs:
           change-request:
             '{"changeCreationTimeOut":3600,"changeStepTimeOut":1800,"pollingInterval":30,"changeRequestDetails":{"attributes": {"short_description": "Test description","start_date":"2025-01-11 08:00:00", "end_date": "2025-01-11 09:00:00", "description": "test description"   },"setCloseCode": false}}'
 
-     # - run: echo "Change Number = ${{ steps.servicenow-change.outputs.change-request-number }}"
+     # - run: echo "Change Number = ${{ steps.servicenow-change.outputs.change-request-number }}" 
